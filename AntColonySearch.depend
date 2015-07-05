@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1436095261 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/Ant.cpp
+	"Ant.h"
+	"parameter.h"
+	<math.h>
+	<stdlib.h>
+	<iostream>
+	<float.h>
+
+1436095601 /windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/include/Ant.h
+	"parameter.h"
+
+1436095394 /windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/include/parameter.h
+
+1436097190 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/NewTSP.cpp
+	"NewTSP.h"
+	"parameter.h"
+	<iostream>
+	<fstream>
+	<time.h>
+	<stdlib.h>
+	<math.h>
+
+1436095413 /windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/include/NewTSP.h
+	"parameter.h"
+	"Ant.h"
+
+1436095571 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/main.cpp
+	<iostream>
+	"parameter.h"
+	"NewTSP.h"
+
