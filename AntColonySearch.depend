@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1436095261 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/Ant.cpp
+1436103666 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/Ant.cpp
 	"Ant.h"
 	"parameter.h"
 	<math.h>
 	<stdlib.h>
+	<stdio.h>
 	<iostream>
 	<float.h>
 
@@ -12,7 +13,7 @@
 
 1436095394 /windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/include/parameter.h
 
-1436097190 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/NewTSP.cpp
+1436103691 source:/windows/CodeStation/CLanguage/MasterDegree/AntColonySearch/src/NewTSP.cpp
 	"NewTSP.h"
 	"parameter.h"
 	<iostream>

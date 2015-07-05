@@ -2,6 +2,7 @@
 #include "parameter.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <iostream>
 #include <float.h>
 
@@ -169,7 +170,7 @@ int Ant::ChooseNextCity()
 
     if(dbPheromoneTotal >= 0)
     {
-        double number_between_zero_to_one = rand() / double(RAND_MAX+1) ;
+        double number_between_zero_to_one = rand() / ( double(RAND_MAX)+1 );
         dbTemp = number_between_zero_to_one * dbPheromoneTotal;
 
         for(int i = 0; i < CITY_COUNT; i++)
@@ -204,8 +205,8 @@ int Ant::ChooseNextCity()
             }
         }
     }
-
     return nSelectCity;
+
 
 }
 

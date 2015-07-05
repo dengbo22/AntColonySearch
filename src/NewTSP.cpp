@@ -102,9 +102,9 @@ void NewTSP::TSPSearch(int startPos)
         cout <<endl << "结果评价得到" << m_aBestAnt.ResultEvaluation() << endl;
 		//-------------
 
-        //--------------------------------------------------------
+
 		UpdatePheromone();
-		system("pause");
+
 
     }
 
@@ -130,7 +130,7 @@ bool NewTSP::CalcMaxMinPheromone()
     double factor = pow(PBest, (double)(1.0 / CITY_COUNT) );
     int avg = (CITY_COUNT / 2) - 1;
     m_dbMinPheromone = (m_dbMaxPheromone*(1- factor)) / ((avg -1)*factor);
-    cout <<"信息素最大值" << m_dbMaxPheromone <<"\t最小值：" << m_dbMinPheromone;
+        cout <<"信息素最大值" << m_dbMaxPheromone <<"\t最小值：" << m_dbMinPheromone <<endl;
     if(m_dbMaxPheromone >= m_dbMinPheromone)
         return true;
     else
