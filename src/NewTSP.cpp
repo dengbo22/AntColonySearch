@@ -11,7 +11,7 @@ using namespace std;
 
 extern double g_Pheromone[CITY_COUNT][CITY_COUNT];
 extern double g_Distance[CITY_COUNT][CITY_COUNT];
-
+extern int g_nCenterCity;
 
 
 /**
@@ -53,15 +53,15 @@ void NewTSP::DistanceInit()
  */
 void NewTSP::InitData()
 {
-	m_aBestAnt.m_dbPathLength = INIT_BEST_ANT_MARK;
     DistanceInit();
 
+	m_aBestAnt.m_dbPathLength = INIT_BEST_ANT_MARK;
     //初始化信息素
     for(int i = 0; i < CITY_COUNT; i++)
         for(int j = 0; j < CITY_COUNT; j++)
             g_Pheromone[i][j] = PHEROMONE_ORIGINAL;
 
-    isFirstLoop = true;
+    m_bIsFirstLoop = true;
 }
 
 
@@ -69,7 +69,7 @@ void NewTSP::InitData()
  *函数名：TSPSearch
  *函数功能：进行TSP搜索，参数startPos表示设置的起点城市
  */
-void NewTSP::TSPSearch(int startPos)
+void NewTSP::TSPSearch()
 {
 	srand(time(NULL));
 
@@ -82,8 +82,7 @@ void NewTSP::TSPSearch(int startPos)
 		//对于该次的所有蚂蚁进行一次搜索
         for(int j = 0; j < ANT_COUNT; j++)
         {
-            m_aAntArray[j].Search(startPos);
-
+            m_aAntArray[j].Search();
 			//搜索完成以后比较看是否已经搜索到更好的线路
 			if( m_aAntArray[j].ResultEvaluation() < iterate_best.ResultEvaluation() )
 			{
@@ -104,6 +103,8 @@ void NewTSP::TSPSearch(int startPos)
 
 
 		UpdatePheromone();
+
+        std::cin.get();
 
 
     }
@@ -154,13 +155,13 @@ void NewTSP::UpdatePheromone()
 
     if(CalcMaxMinPheromone())
     {
-        if(isFirstLoop)
+        if(m_bIsFirstLoop)
         {
         //初次迭代，此时需要将所有的初始信息素值设定为信息素上限
             for(int i = 0;i < CITY_COUNT; i++)
                 for(int j = 0; j < CITY_COUNT; j++)
                     g_Pheromone[i][j] = m_dbMaxPheromone;
-            isFirstLoop = false;
+            m_bIsFirstLoop = false;
         }
         else
         {

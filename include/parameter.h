@@ -1,12 +1,17 @@
 #ifndef PARAMETER_H_INCLUDED
 #define PARAMETER_H_INCLUDED
 
+
+//Instance Parameter
 const int CITY_COUNT = 52;
 const int ANT_COUNT = 34;
 const int ITERATIONS = 100;
 const int PARALLEL_NUMBER = 10;
 const double MAX_LENGTH = 100000000;
-const double ALPHA = 2.0;   //PheromonePercent
+
+
+//Ant Colony Optimization Parameter
+const double ALPHA = 2.0;
 const double BETA = 2.0;
 const double ROU = 0.95;
 const double PHEROMONE_ORIGINAL = 1.0;

@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="/home/tiny/WorkStation/AntColonySearch/include" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +24,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,7 +35,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Ant.h" />
+		<Unit filename="include/Helper.h" />
+		<Unit filename="include/NewTSP.h" />
+		<Unit filename="include/parameter.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Ant.cpp" />
+		<Unit filename="src/Helper.cpp" />
+		<Unit filename="src/NewTSP.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

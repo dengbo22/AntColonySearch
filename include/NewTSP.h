@@ -9,7 +9,7 @@ class NewTSP
 {
     public:
         void InitData();
-        void TSPSearch(int);
+        void TSPSearch();
         void UpdatePheromone();
         void DistanceInit();
         bool CalcMaxMinPheromone();
@@ -18,7 +18,7 @@ class NewTSP
         Ant m_aBestAnt;
         double m_dbMaxPheromone;
         double m_dbMinPheromone;
-        bool isFirstLoop;
+        bool m_bIsFirstLoop;
 };
 
 #endif // NEWTSP_H
