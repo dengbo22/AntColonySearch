@@ -8,6 +8,7 @@ const int ANT_COUNT = 34;
 const int ITERATIONS = 100;
 const int PARALLEL_NUMBER = 10;
 const double MAX_LENGTH = 100000000;
+const int ERROR_AGAIN_TIMES = 5;
 
 
 //Ant Colony Optimization Parameter
@@ -17,11 +18,10 @@ const double ROU = 0.95;
 const double PHEROMONE_ORIGINAL = 1.0;
 const double AVERAGE_PERCENT = 0.3;
 const double PBest = 0.5;
-
 const double ENLARGE_PETERMITER_Q = 1000;
 
-
 const double INIT_BEST_ANT_MARK = -1 ;
+
 
 
 

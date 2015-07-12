@@ -16,7 +16,7 @@ extern int g_nCenterCity;
 
 /**
  *函数名：DistanceInit
- *功能：将文件内部的所有距离数据输入其中（默认）或者可以选择用户自己输入数据
+ *功能：将TSP数据集中的数据输入到应用执行内存中
  */
 void NewTSP::DistanceInit()
 {
@@ -26,21 +26,24 @@ void NewTSP::DistanceInit()
 	//测试数据输入路径：
     file.open("Test.tsp" , ios::in);
     for(int i = 0; i < CITY_COUNT; i++)
+    {
         for(int j = 0; j < CITY_COUNT; j++)
+        {
             file >> g_Distance[i][j];
+            if(g_Distance < 0)
+            {
+                cout <<"存在城市" << i <<"-->" << j <<" 距离小于0\n" ;
+                cout <<"程序异常退出" << endl;
+                exit(-1);
+            }
+
+        }
+
+    }
 
     file.close();
 //----------------------------------------------------------------
-
-/*
--------------------------用户自己输入数据------------------------
-    for(int i = 0 ; i < CITY_COUNT; i++)
-        for(int j = 0; j < CITY_COUNT; j++)
-            cin >> g_Distance[i][j];
------------------------------------------------------------------
-*/
     cout <<"数据获取完毕！\n" ;
-
     return ;
 }
 
@@ -77,38 +80,34 @@ void NewTSP::TSPSearch()
     for(int i = 0; i < ITERATIONS; i++)
     {
         //------------以下内容为每一次循环搜索----------------
-        Ant iterate_best;
-        iterate_best.m_dbPathLength = INIT_BEST_ANT_MARK;
-		//对于该次的所有蚂蚁进行一次搜索
+        Ant aIterateBest;
+        aIterateBest.m_dbPathLength = INIT_BEST_ANT_MARK;
+        //寻找本轮迭代中的最优蚂蚁
         for(int j = 0; j < ANT_COUNT; j++)
         {
             m_aAntArray[j].Search();
-			//搜索完成以后比较看是否已经搜索到更好的线路
-			if( m_aAntArray[j].ResultEvaluation() < iterate_best.ResultEvaluation() )
+			if( m_aAntArray[j].ResultEvaluation() < aIterateBest.ResultEvaluation() )
 			{
-				iterate_best = m_aAntArray[j];
+				aIterateBest = m_aAntArray[j];
 			}
 
         }
+        //将本轮迭代的最优蚂蚁与全局最优比较
+        if(m_aBestAnt.ResultEvaluation() > aIterateBest.ResultEvaluation() )
+            m_aBestAnt = aIterateBest;
 
-        if(m_aBestAnt.ResultEvaluation() > iterate_best.ResultEvaluation() )
-            m_aBestAnt = iterate_best;
+		UpdatePheromone();
+        //-----------------一次迭代完毕-------------------------------
 
-		//---ForTest---
+
+        //---ForTest---
 		cout << "ITERATOR:" << i << endl;
         for(int j = 0 ; j < PARALLEL_NUMBER; j++)
             cout << m_aBestAnt.m_dbSplitLength[j] <<"\t";
         cout <<endl << "结果评价得到" << m_aBestAnt.ResultEvaluation() << endl;
 		//-------------
 
-
-		UpdatePheromone();
-
-        std::cin.get();
-
-
     }
-
 
     //输出最优路径情况：
 	cout <<"结果最优路径为：";
@@ -135,7 +134,16 @@ bool NewTSP::CalcMaxMinPheromone()
     if(m_dbMaxPheromone >= m_dbMinPheromone)
         return true;
     else
+    {
+        cout <<"最大最小信息素计算异常！" << endl;
+        if(m_dbMaxPheromone < 0 || m_dbMinPheromone < 0)
+            exit(-12);
+        else
+            exit(-11);
+
         return false;
+    }
+
 }
 
 
@@ -167,10 +175,10 @@ void NewTSP::UpdatePheromone()
         {
             for(int i = 0; i < ANT_COUNT; i++)  //每只蚂蚁留下的信息素
             {
-                for(int j = 1; j < CITY_COUNT + PARALLEL_NUMBER; j++)     //每个城市之间的信息素
+                for(int j = 0; j < PATH_SIZE; j++)     //每个城市之间的信息素
                 {
                     m = m_aAntArray[i].m_nPath[j];
-                    n = m_aAntArray[i].m_nPath[j-1];
+                    n = m_aAntArray[i].m_nPath[ (j+1) % PATH_SIZE ];
                     dbTempAry[n][m] += ENLARGE_PETERMITER_Q / m_aAntArray[i].ResultEvaluation();
                     dbTempAry[m][n] = dbTempAry[n][m];
                 }
@@ -187,12 +195,7 @@ void NewTSP::UpdatePheromone()
                         g_Pheromone[i][j] = m_dbMinPheromone;
                 }
         }
-
-
     }
-    else
-        cout <<"信息素计算错误：最大信息素小于最小信息素" << endl;
-
 
 }
 

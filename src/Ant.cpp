@@ -1,5 +1,6 @@
 #include "Ant.h"
 #include "parameter.h"
+#include "Helper.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,31 +34,49 @@ void Ant::InitAnt()
     m_nAllowedCity[g_nCenterCity] = PARALLEL_NUMBER;
 }
 
+
 bool Ant::ChooseFirstCity()
 {
+    bool isSuccess = false;
+    int city = 0;
+    for(int i = 0; i < ERROR_AGAIN_TIMES; i++)
+    {
+        city = Helper::getRandom(CITY_COUNT);
+        if(city < CITY_COUNT && city >=0)
+        {
+            isSuccess = true;
+            break;
+        }
+        else
+        {
+            std::cout <<"选择城市错误，第" << i+i <<"次重新选择城市" << endl;
+            isSuccess = false;
+        }
 
-    int city = Helper::getRandom(CITY_COUNT);
-
-    if(city >=  CITY_COUNT || city < 0){
-        std::cout << "ChooseFirstCity() error!\n选择的城市超出允许范围" << std::endl;
+    }
+    if(isSuccess)
+    {
+        //设置初始蚂蚁所在位置
+        m_nCurCityNo = city;
+        //将出发城市保存入路径数组中
+        m_nPath[0] = m_nCurCityNo;
+        -- m_nAllowedCity[m_nCurCityNo] ;
+        m_nMovedCityCount = 1;
+        return true;
+    }
+    else
+    {
+        std::cout <<"重试失败！" << endl;
         return false;
     }
 
-    //设置初始蚂蚁所在位置
-    m_nCurCityNo = city;
-    //将出发城市保存入路径数组中
-    m_nPath[0] = m_nCurCityNo;
-    -- m_nAllowedCity[m_nCurCityNo] ;
-    m_nMovedCityCount = 1;
-
-    return true;
 }
 
 void Ant::Move()
 {
     int nCityNo = ChooseNextCity();
 
-    //更新m_dbPathLength,当相邻城市一致时候惩罚
+    //更新m_dbPathLength,当相邻城市一致时候惩罚MAX_LENGTH长度
     if(m_nCurCityNo == nCityNo)
         m_dbPathLength += MAX_LENGTH;
 
@@ -73,6 +92,32 @@ void Ant::Move()
 
 }
 
+/**
+*根据m_nPath进行分裂，将各段的距离计算出来并存储到m_dbSplitLength中
+*/
+void Ant::SplitPath()
+{
+    int startPos = 0;
+    while(m_nPath[startPos] != g_nCenterCity)
+        ++startPos;
+    double length = 0;
+    int lengthPartion = 0;
+    int i = startPos;
+    do
+    {
+        length += g_Distance[ m_nPath[i] ][ m_nPath[(i+1)% PATH_SIZE] ];
+        if(m_nPath[(i+1)%PATH_SIZE ] == g_nCenterCity)
+        {
+            m_dbSplitLength[lengthPartion] = length;
+            ++ lengthPartion;
+            length = 0;
+        }
+        i = (i+1)%PATH_SIZE;
+    }while(i != startPos);
+
+}
+
+
 bool Ant::Search()
 {
     InitAnt();
@@ -83,13 +128,14 @@ bool Ant::Search()
         {
             Move();
         }
+        //根据m_nPath将路径分段
         SplitPath();
         return true;
     }
     else
     {
         std::cout <<"Search() error!\nChooseFirstCity()返回错误结果" << std::endl;
-        return false;
+        exit(-21);
     }
 }
 
@@ -163,7 +209,7 @@ int Ant::ChooseNextCity()
     else
     {
         cout <<"ChooseNextCity() error!\ndbPheromoneTotal出现负数值！" <<endl;
-        return -2;
+        exit(-13);
     }
 
     //极端情况考虑：以上情况并未给出合理的nSelectCity
@@ -183,27 +229,6 @@ int Ant::ChooseNextCity()
 
 }
 
-void Ant::SplitPath()
-{
-    int startPos = 0;
-    while(m_nPath[startPos] != g_nCenterCity)
-        ++startPos;
-    double length = 0;
-    int lengthPartion = 0;
-    int i = startPos;
-    do
-    {
-        length += g_Distance[ m_nPath[i] ][ m_nPath[(i+1)% PATH_SIZE] ];
-        if(m_nPath[(i+1)%PATH_SIZE ] == g_nCenterCity)
-        {
-            m_dbSplitLength[lengthPartion] = length;
-            ++ lengthPartion;
-            length = 0;
-        }
-        i = (i+1)%PATH_SIZE;
-    }while(i != startPos);
-
-}
 
 double Ant::ResultEvaluation()
 {
@@ -225,19 +250,19 @@ double Ant::ResultEvaluation()
     }
 
 
-    double average_value = m_dbPathLength / PARALLEL_NUMBER;
-    double variance_value = 0;
+    double dbAverageVaule = m_dbPathLength / PARALLEL_NUMBER;
+    double dbVarianceValue = 0;
 
 
         //否则开始进行计算
     for(int i = 0; i < PARALLEL_NUMBER; i++)
     {
-        variance_value += pow( (m_dbSplitLength[i] - average_value) ,2);
+        dbVarianceValue += pow( (m_dbSplitLength[i] - dbAverageVaule) ,2);
     }
-	variance_value /= PARALLEL_NUMBER;
-	variance_value = sqrt(variance_value);
+	dbVarianceValue /= PARALLEL_NUMBER;
+	dbVarianceValue = sqrt(dbVarianceValue);
 
-	return average_value * AVERAGE_PERCENT + variance_value *(1- AVERAGE_PERCENT);
+	return dbAverageVaule * AVERAGE_PERCENT + dbVarianceValue *(1- AVERAGE_PERCENT);
 }
 
 Ant& Ant::operator=(Ant &ant)
@@ -262,38 +287,6 @@ Ant& Ant::operator=(Ant &ant)
         m_dbSplitLength[j] = ant.m_dbSplitLength[j];
 
     return *this;
-}
-
-
-//==============================检验函数================================
-bool Ant::CheckPath(int startCity)
-{
-    int count = 0;
-    for(int i = 0; i < CITY_COUNT + PARALLEL_NUMBER; i++)
-    {
-
-        if(m_nPath[i] < 0)
-        {
-            cout <<"出现路径错误：某一个城市未被选中！" << endl;
-            //此处可输出城市经过情况！
-            return false;
-        }
-        if(m_nPath[i] == startCity)
-            ++count;
-    }
-    if(count != PARALLEL_NUMBER)
-    {
-        cout <<"路径中起点未走足够的次数！" << endl;
-        return false;
-    }
-    return true;
-}
-
-void Ant::DisplayPath()
-{
-    cout <<"当前的蚂蚁路径为：";
-    for(int i = 0; i < CITY_COUNT + PARALLEL_NUMBER; i++)
-        cout <<m_nPath[i]<<" ";
 }
 
 
