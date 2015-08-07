@@ -31,14 +31,15 @@
 	"parameter.h"
 	"NewTSP.h"
 
-1436613354 source:/home/tiny/WorkStation/AntColonySearch/main.cpp
+1438866948 source:/home/tiny/WorkStation/AntColonySearch/main.cpp
 	<iostream>
 	<stdlib.h>
 	<time.h>
+	"Helper.h"
 	"parameter.h"
 	"NewTSP.h"
 
-1436678847 source:/home/tiny/WorkStation/AntColonySearch/src/Ant.cpp
+1438866818 source:/home/tiny/WorkStation/AntColonySearch/src/Ant.cpp
 	"Ant.h"
 	"parameter.h"
 	"Helper.h"
@@ -48,31 +49,30 @@
 	<iostream>
 	<float.h>
 
-1436670344 source:/home/tiny/WorkStation/AntColonySearch/src/NewTSP.cpp
+1437226654 source:/home/tiny/WorkStation/AntColonySearch/src/NewTSP.cpp
 	"NewTSP.h"
 	"parameter.h"
+	"Helper.h"
 	<iostream>
 	<fstream>
 	<time.h>
 	<stdlib.h>
 	<math.h>
 
-1436678828 /home/tiny/WorkStation/AntColonySearch/include/Ant.h
+1437285190 /home/tiny/WorkStation/AntColonySearch/include/Ant.h
 	"parameter.h"
 
-1436667263 /home/tiny/WorkStation/AntColonySearch/include/parameter.h
+1437297395 /home/tiny/WorkStation/AntColonySearch/include/parameter.h
 
 1436678815 /home/tiny/WorkStation/AntColonySearch/include/NewTSP.h
 	"parameter.h"
 	"Ant.h"
 
-1436678928 /home/tiny/WorkStation/AntColonySearch/include/Helper.h
-	"Ant.h"
+1438865267 /home/tiny/WorkStation/AntColonySearch/include/Helper.h
 
-1436678178 source:/home/tiny/WorkStation/AntColonySearch/src/Helper.cpp
+1438866907 source:/home/tiny/WorkStation/AntColonySearch/src/Helper.cpp
 	"Helper.h"
 	"parameter.h"
-	"Ant.h"
 	<stdlib.h>
 	<iostream>
 

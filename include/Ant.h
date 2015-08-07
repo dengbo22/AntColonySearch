@@ -12,8 +12,6 @@ class Ant
         int ChooseNextCity();   //选择下一个城市
         void Move();        //选择一个城市进行一步移动
         bool Search();
-        bool CreateCircle();
-        void CalPathLength();
         double ResultEvaluation();
         double HeuristicFunction(int, int);
         void SplitPath();

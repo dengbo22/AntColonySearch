@@ -1,5 +1,6 @@
 #include "NewTSP.h"
 #include "parameter.h"
+#include "Helper.h"
 #include <iostream>
 #include <fstream>
 #include <time.h>
@@ -93,9 +94,9 @@ void NewTSP::TSPSearch()
 
         }
         //将本轮迭代的最优蚂蚁与全局最优比较
-        if(m_aBestAnt.ResultEvaluation() > aIterateBest.ResultEvaluation() )
+        if(m_aBestAnt.ResultEvaluation() > aIterateBest.ResultEvaluation() ){
             m_aBestAnt = aIterateBest;
-
+        }
 		UpdatePheromone();
         //-----------------一次迭代完毕-------------------------------
 
@@ -112,7 +113,7 @@ void NewTSP::TSPSearch()
     //输出最优路径情况：
 	cout <<"结果最优路径为：";
 	for(int i = 0 ; i < PATH_SIZE; i++)
-		cout << " " << m_aBestAnt.m_nPath[i]  ;
+		cout << " " << m_aBestAnt.m_nPath[i] ;
 }
 
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include "Helper.h"
 #include "parameter.h"
 #include "NewTSP.h"
 using namespace std;
@@ -14,10 +15,17 @@ int g_nCenterCity = 0;
 
 int main()
 {
-    srand(time(NULL));
-    NewTSP tsp;
-    tsp.InitData();
-    tsp.TSPSearch();
+
+    if(Helper::ParameterCheck())
+    {
+        srand(time(NULL));
+        NewTSP tsp;
+        tsp.InitData();
+        tsp.TSPSearch();
+    }
+    else
+        std::cin.get();
+
 
     return 0;
 }

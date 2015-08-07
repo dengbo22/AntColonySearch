@@ -9,7 +9,7 @@
 
 using std::cout;
 using std::endl;
-
+using std::cin;
 extern double g_Pheromone[CITY_COUNT][CITY_COUNT];
 extern double g_Distance[CITY_COUNT][CITY_COUNT];
 extern int g_nCenterCity;
@@ -128,6 +128,8 @@ bool Ant::Search()
         {
             Move();
         }
+        //加上最后一个城市移动回第一个城市
+        m_dbPathLength += g_Distance[m_nPath[PATH_SIZE-1]][m_nPath[0]];
         //根据m_nPath将路径分段
         SplitPath();
         return true;
@@ -168,6 +170,8 @@ double Ant::HeuristicFunction(int startCity, int endCity)
 int Ant::ChooseNextCity()
 {
     int nSelectCity = -1;
+
+
     double dbPheromoneTotal = 0.0;
     double prob[CITY_COUNT];
 
@@ -224,6 +228,7 @@ int Ant::ChooseNextCity()
             }
         }
     }
+
     return nSelectCity;
 
 
@@ -261,7 +266,6 @@ double Ant::ResultEvaluation()
     }
 	dbVarianceValue /= PARALLEL_NUMBER;
 	dbVarianceValue = sqrt(dbVarianceValue);
-
 	return dbAverageVaule * AVERAGE_PERCENT + dbVarianceValue *(1- AVERAGE_PERCENT);
 }
 

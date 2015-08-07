@@ -1,13 +1,15 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include "Ant.h"
 
 class Helper
 {
     public:
         static int getRandom(const int&, int min = 0);
-        static bool CheckPath(Ant);
+        static void CheckGlobePheronmone();
+        static bool CheckPath(int[]);
+        static bool CheckResult(int[]);
+        static bool ParameterCheck();
 };
 
 #endif // HELPER_H
