@@ -13,9 +13,9 @@ const int ERROR_AGAIN_TIMES = 5;
 
 //Ant Colony Optimization Parameter
 const double ALPHA = 2.0;
-const double BETA = 2.0;
+const double BETA = 5.0;
 const double ROU = 0.9;
-const double PHEROMONE_ORIGINAL = 1.0;
+const double PHEROMONE_ORIGINAL = 100.0;
 const double AVERAGE_PERCENT = 1;
 const double PBest = 0.5;
 const double ENLARGE_PETERMITER_Q = 1000;

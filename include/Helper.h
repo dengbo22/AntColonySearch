@@ -1,6 +1,6 @@
 #ifndef HELPER_H
 #define HELPER_H
-
+#include <fstream>
 
 class Helper
 {
@@ -10,6 +10,7 @@ class Helper
         static bool CheckPath(int[]);
         static bool CheckResult(int[]);
         static bool ParameterCheck();
+
 };
 
 #endif // HELPER_H

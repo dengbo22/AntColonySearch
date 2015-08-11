@@ -96,24 +96,38 @@ void NewTSP::TSPSearch()
         //将本轮迭代的最优蚂蚁与全局最优比较
         if(m_aBestAnt.ResultEvaluation() > aIterateBest.ResultEvaluation() ){
             m_aBestAnt = aIterateBest;
+
+            //Helper::CheckGlobePheronmone();
+			cout << "Iterator " << i <<"\t更新结果如下："  ;
+            for(int j = 0 ; j < PARALLEL_NUMBER; j++)
+                cout << m_aBestAnt.m_dbSplitLength[j] <<"\t";
+                cout << endl;
         }
 		UpdatePheromone();
         //-----------------一次迭代完毕-------------------------------
 
 
         //---ForTest---
+/*
 		cout << "ITERATOR:" << i << endl;
         for(int j = 0 ; j < PARALLEL_NUMBER; j++)
             cout << m_aBestAnt.m_dbSplitLength[j] <<"\t";
         cout <<endl << "结果评价得到" << m_aBestAnt.ResultEvaluation() << endl;
+*/
 		//-------------
 
     }
 
+    fstream file;
+    file.open("/home/tiny/桌面/result", ios::out);
     //输出最优路径情况：
 	cout <<"结果最优路径为：";
-	for(int i = 0 ; i < PATH_SIZE; i++)
-		cout << " " << m_aBestAnt.m_nPath[i] ;
+	for(int i = 0 ; i < PATH_SIZE; i++){
+        cout << " " << 1+m_aBestAnt.m_nPath[i] ;
+        file << 1+m_aBestAnt.m_nPath[i] <<"\t";
+	}
+    file.close();
+    cout <<"结果值为：" << m_aBestAnt.m_dbPathLength << endl;
 }
 
 
@@ -131,7 +145,6 @@ bool NewTSP::CalcMaxMinPheromone()
     double factor = pow(PBest, (double)(1.0 / CITY_COUNT) );
     int avg = (CITY_COUNT / 2) - 1;
     m_dbMinPheromone = (m_dbMaxPheromone*(1- factor)) / ((avg -1)*factor);
-        cout <<"信息素最大值" << m_dbMaxPheromone <<"\t最小值：" << m_dbMinPheromone <<endl;
     if(m_dbMaxPheromone >= m_dbMinPheromone)
         return true;
     else
@@ -184,6 +197,8 @@ void NewTSP::UpdatePheromone()
                     dbTempAry[m][n] = dbTempAry[n][m];
                 }
             }
+
+
 
             //更新环境信息素
             for(int i = 0; i < CITY_COUNT; i++)

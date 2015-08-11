@@ -2,6 +2,7 @@
 #include "parameter.h"
 #include <stdlib.h>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 extern int g_nCenterCity;
@@ -15,12 +16,16 @@ int Helper::getRandom(const int& max, int min)
 
 
 void Helper::CheckGlobePheronmone(){
+    fstream file;
+    file.open("/home/tiny/桌面/file",ios::out);
     for(int i = 0; i < CITY_COUNT; i++){
         for(int j = 0; j < CITY_COUNT; j++){
-            cout << g_Pheromone[i][j] <<" ";
+            file << g_Pheromone[i][j] <<"\t";
         }
-        cout << endl;
+        file << endl;
     }
+    file.close();
+
 }
 
 
@@ -82,7 +87,7 @@ bool Helper::ParameterCheck()
         check += PARALLEL_NUMBER_ENSURE;
     if(ERROR_AGAIN_TIMES > 0)
         check += ERROR_AGAIN_TIMES_ENSURE;
-    if(ALPHA > 0 && BETA > 0 && ROU > 0 && ROU <= 1)
+    if(ALPHA >= 0 && BETA >= 0 && ROU > 0 && ROU <= 1)
         check += BASIC_PARAMETER_ENSURE;
     if(PHEROMONE_ORIGINAL > 0)
         check += PHEROMONE_ORIGINAL_ENSURE;

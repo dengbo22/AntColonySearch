@@ -39,7 +39,7 @@
 	"parameter.h"
 	"NewTSP.h"
 
-1438866818 source:/home/tiny/WorkStation/AntColonySearch/src/Ant.cpp
+1439279877 source:/home/tiny/WorkStation/AntColonySearch/src/Ant.cpp
 	"Ant.h"
 	"parameter.h"
 	"Helper.h"
@@ -49,7 +49,7 @@
 	<iostream>
 	<float.h>
 
-1437226654 source:/home/tiny/WorkStation/AntColonySearch/src/NewTSP.cpp
+1439276541 source:/home/tiny/WorkStation/AntColonySearch/src/NewTSP.cpp
 	"NewTSP.h"
 	"parameter.h"
 	"Helper.h"
@@ -62,17 +62,19 @@
 1437285190 /home/tiny/WorkStation/AntColonySearch/include/Ant.h
 	"parameter.h"
 
-1437297395 /home/tiny/WorkStation/AntColonySearch/include/parameter.h
+1439276264 /home/tiny/WorkStation/AntColonySearch/include/parameter.h
 
 1436678815 /home/tiny/WorkStation/AntColonySearch/include/NewTSP.h
 	"parameter.h"
 	"Ant.h"
 
-1438865267 /home/tiny/WorkStation/AntColonySearch/include/Helper.h
+1439170676 /home/tiny/WorkStation/AntColonySearch/include/Helper.h
+	<fstream>
 
-1438866907 source:/home/tiny/WorkStation/AntColonySearch/src/Helper.cpp
+1439276272 source:/home/tiny/WorkStation/AntColonySearch/src/Helper.cpp
 	"Helper.h"
 	"parameter.h"
 	<stdlib.h>
 	<iostream>
+	<fstream>
 

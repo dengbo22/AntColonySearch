@@ -74,6 +74,7 @@ bool Ant::ChooseFirstCity()
 
 void Ant::Move()
 {
+
     int nCityNo = ChooseNextCity();
 
     //更新m_dbPathLength,当相邻城市一致时候惩罚MAX_LENGTH长度
@@ -164,6 +165,7 @@ double Ant::HeuristicFunction(int startCity, int endCity)
         distancePercent = pow(1 / g_Distance[startCity][endCity] , BETA);
 
     return pheromonePercent * distancePercent * ENLARGE_PETERMITER_Q;
+
 }
 
 //允许选择相邻的城市
